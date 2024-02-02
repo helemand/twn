@@ -14,11 +14,11 @@ const Table = () => {
   const itemsPerPage = 10;
 
   const fields: Fields = {
-    firstname: "eesnimi",
-    surname: "perekonnanimi",
-    sex: "sugu",
-    personal_code: "sünnikuupäev",
-    phone: "telefon",
+    firstname: "Eesnimi",
+    surname: "Perekonnanimi",
+    sex: "Sugu",
+    personal_code: "Sünnikuupäev",
+    phone: "Telefon",
   };
 
   const { isError, isPending, data, error } = useFetchData<QueryResult>({
