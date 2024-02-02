@@ -8,4 +8,4 @@ npm run dev
 ```
 
 ## Or you can access it here:
-www.proovitoo.ee
+https://helemand.github.io/twn/
