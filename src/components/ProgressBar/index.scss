@@ -1,0 +1,32 @@
+.progress {
+  display: block;
+  width: 100%;
+  height: 2rem;
+  background: #f1f1f1;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  position: relative;
+  margin: 0 0 1.25rem;
+}
+
+.progress-indicator {
+  position: absolute;
+  box-sizing: border-box;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: var(--color-primary);
+  transition: width 0.25s;
+  text-align: right;
+  font-size: 0.8125rem;
+  line-height: 2rem;
+  text-shadow: 0.0625rem 0.0625rem 0.0625rem rgba(0, 0, 0, 0.7);
+
+  span {
+    margin: 0 1rem;
+  }
+}
+
+.progress-container {
+  margin-top: 1.5rem;
+}

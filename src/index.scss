@@ -1,0 +1,62 @@
+@import "./assets/styles/index.scss";
+
+:root {
+  font-family: BoosterNextFY, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --color-primary: #14cc76;
+  --color-link-hover: #03875c;
+  --color-button-hover: #41e592;
+  --color-secondary: #ff57a2;
+  --color-text: #3a3d57;
+  --color-text-secondary: #fff;
+  --color-background: #3a3d57;
+  --sidenav-width: 220px;
+}
+
+body {
+  margin: 0;
+  font-family: "Open Sans";
+  color: var(--color-text-secondary);
+  background: var(--color-background);
+}
+
+h1 {
+  font-size: 2.8rem;
+  font-family: BoosterNextFY;
+  text-transform: uppercase;
+  text-align: center;
+  margin-top: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.container {
+  background-image: url("/images/bg-deco-left.svg"),
+    url("/images/bg-deco-right.svg");
+  background-repeat: no-repeat;
+  background-position: var(--sidenav-width) bottom, 100% 0;
+  background-size: 150px, 250px;
+  background-attachment: fixed;
+  display: block;
+  margin-left: var(--sidenav-width);
+  overflow: auto;
+  padding: 5rem 2.5rem;
+  height: 100vh;
+}
+
+@media screen and (max-width: 960px) {
+  .container {
+    margin-left: 0;
+    background-position: 0 bottom, 100% 0;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-top: 7.5rem;
+  }
+}
+
+.inner {
+  max-width: 1000px;
+  min-height: 100%;
+  margin: 0 auto;
+}
