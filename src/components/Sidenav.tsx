@@ -14,7 +14,9 @@ interface SidenavTypes {
 const Sidenav: React.FC<SidenavTypes> = ({ menuOpen }) => {
   return (
     <nav className={menuOpen ? "sidenav sidenav-open" : "sidenav"}>
-      <img className="logo" src={twnLogo} />
+      <NavLink to="/">
+        <img className="logo" src={twnLogo} />
+      </NavLink>
       <ul className="list-container">
         <li>
           <NavLink
