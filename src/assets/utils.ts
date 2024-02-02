@@ -1,10 +1,8 @@
-import { DateTime } from "luxon";
-
 export const convertPersonalCodeToDate = (personalCode: string) => {
   const genderDigit = parseInt(personalCode.charAt(0), 10);
   const year = parseInt(personalCode.substring(1, 3), 10);
-  const month = parseInt(personalCode.substring(3, 5), 10);
-  const day = parseInt(personalCode.substring(5, 7), 10);
+  const month = personalCode.substring(3, 5);
+  const day = personalCode.substring(5, 7);
 
   const centuryOffsets: Record<number, number> = {
     1: 1800,
@@ -17,13 +15,7 @@ export const convertPersonalCodeToDate = (personalCode: string) => {
 
   const fullYear = centuryOffsets[genderDigit] + year;
 
-  const formattedDate = DateTime.fromObject({
-    year: fullYear,
-    month,
-    day,
-  }).toFormat("dd.MM.yyyy");
-
-  return formattedDate;
+  return [fullYear, month, day].join(".");
 };
 
 export const formatPhoneNumber = (phoneNumber: string): string => {
@@ -31,4 +23,11 @@ export const formatPhoneNumber = (phoneNumber: string): string => {
   const remainingDigits = phoneNumber.substring(4);
 
   return `${countryCode} ${remainingDigits}`;
+};
+
+export const reverseDateFormat = (inputDate: string) => {
+  const parts = inputDate.split(".");
+
+  const [year, month, day] = parts;
+  return `${day}.${month}.${year}`;
 };

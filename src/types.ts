@@ -3,6 +3,7 @@ export type ImageType = {
 };
 
 export type Person = {
+  birthday: string;
   body: string;
   image: ImageType;
   firstname: string;
@@ -14,7 +15,7 @@ export type Person = {
   surname: string;
 };
 
-export type QueryResult = {
+export type Persons = {
   list: Person[];
 };
 

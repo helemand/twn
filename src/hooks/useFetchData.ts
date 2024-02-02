@@ -5,11 +5,13 @@ interface FetchDataProps<T> {
   queryFn: () => Promise<T>;
 }
 
-export function useFetchData<T>(props: FetchDataProps<T>): UseQueryResult<T> {
+const useFetchData = <T>(props: FetchDataProps<T>): UseQueryResult<T> => {
   const { queryKey, queryFn } = props;
 
   return useQuery({
     queryKey,
     queryFn,
   });
-}
+};
+
+export default useFetchData;

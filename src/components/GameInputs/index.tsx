@@ -46,7 +46,11 @@ const GameInputs: React.FC<GameInputsProps> = ({ onPauseResume, paused }) => {
     dispatch(setGridHeight(Number(selectedHeight)));
   };
 
-  function generateSelectOptions(min: number, max: number, increment: number) {
+  const generateSelectOptions = (
+    min: number,
+    max: number,
+    increment: number
+  ) => {
     const options = [];
     for (let i = min; i <= max; i += increment) {
       options.push(
@@ -56,7 +60,7 @@ const GameInputs: React.FC<GameInputsProps> = ({ onPauseResume, paused }) => {
       );
     }
     return options;
-  }
+  };
 
   const generateSpeedOption = () => {
     return ["normal", "slow", "fast"].map((option) => (

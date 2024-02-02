@@ -1,11 +1,11 @@
-import axios from "axios";
 import Paginator from "../components/Paginator";
 import { useState } from "react";
-import { SortColumn, SortOrder, Fields, QueryResult, Person } from "../types";
+import { SortColumn, SortOrder, Fields, Persons, Person } from "../types";
 import TableHeader from "../components/Table/TableHeader";
 import TableBody from "../components/Table/TableBody";
 import Loader from "../components/Loader";
-import { useFetchData } from "../hooks/useFetchData";
+import useFetchData from "../hooks/useFetchData";
+import { getTableData } from "../api";
 
 const Table = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -21,14 +21,9 @@ const Table = () => {
     phone: "Telefon",
   };
 
-  const { isError, isPending, data, error } = useFetchData<QueryResult>({
+  const { isError, isPending, data, error } = useFetchData<Persons>({
     queryKey: ["tableData"],
-    queryFn: async () => {
-      const response = await axios.get<QueryResult>(
-        `https://midaiganes.irw.ee/api/list?limit=500`
-      );
-      return response.data;
-    },
+    queryFn: getTableData,
   });
 
   const totalPages = Math.ceil((data?.list.length || 200) / itemsPerPage);

@@ -1,9 +1,6 @@
 import "./index.scss";
 import { useState } from "react";
-import {
-  convertPersonalCodeToDate,
-  formatPhoneNumber,
-} from "../../assets/utils";
+import { formatPhoneNumber, reverseDateFormat } from "../../assets/utils";
 import { NavLink } from "react-router-dom";
 import { Person } from "../../types";
 import React from "react";
@@ -33,10 +30,10 @@ const TableBody: React.FC<TableBodyProps> = ({ data, currentPage }) => {
           firstname,
           surname,
           sex,
-          personal_code,
           phone,
           image,
           body,
+          birthday,
         }: Person) => {
           const isRowExpanded = expandedRow === id;
           const truncatedBody = body.split(/<\/p>\s*<p>/)[0] + "...";
@@ -45,14 +42,14 @@ const TableBody: React.FC<TableBodyProps> = ({ data, currentPage }) => {
             <React.Fragment key={id}>
               <tr
                 onClick={() => expandTableRow(id)}
-                className={isRowExpanded ? "expanded-tablerow" : ""}
+                className={isRowExpanded ? "expanded-tablerow-header" : ""}
               >
                 <td>
                   <span>{firstname}</span>
                 </td>
                 <td>{surname}</td>
                 <td>{sex === "f" ? "Naine" : "Mees"}</td>
-                <td>{convertPersonalCodeToDate(personal_code.toString())}</td>
+                <td>{reverseDateFormat(birthday)}</td>
                 <td>{formatPhoneNumber(phone as string)}</td>
               </tr>
               {isRowExpanded && (

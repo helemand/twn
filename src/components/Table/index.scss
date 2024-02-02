@@ -92,9 +92,17 @@ tr:nth-child(even) {
   margin-left: 0.5rem;
 }
 
+.expanded-tablerow-header {
+  background: var(--color-text-secondary) !important;
+  color: #333;
+}
+
 .expanded-tablerow {
   background: var(--color-text-secondary) !important;
   color: #333;
+  td {
+    cursor: default;
+  }
 }
 
 .expanded-content {
@@ -134,5 +142,12 @@ tr:nth-child(even) {
   td {
     font-size: 0.875rem;
     padding: 0.375rem 0.5rem;
+  }
+
+  .paginator {
+    button {
+      width: 2rem;
+      height: 2rem;
+    }
   }
 }

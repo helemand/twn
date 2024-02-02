@@ -1,9 +1,9 @@
-import axios from "axios";
 import Image from "../components/Image";
 import { useParams } from "react-router-dom";
 import Loader from "../components/Loader";
-import { useFetchData } from "../hooks/useFetchData";
+import useFetchData from "../hooks/useFetchData";
 import { ImageType } from "../types";
+import { getArticleData } from "../api";
 
 type Article = {
   body: string;
@@ -18,12 +18,7 @@ const Article = () => {
 
   const { isPending, error, data } = useFetchData<Article>({
     queryKey: ["articleData", id as string],
-    queryFn: async () => {
-      const response = await axios.get<Article>(
-        `https://midaiganes.irw.ee/api/list/${id || "972d2b8a"}`
-      );
-      return response.data;
-    },
+    queryFn: () => getArticleData(id || "972d2b8a"),
   });
 
   if (isPending) return <Loader />;
