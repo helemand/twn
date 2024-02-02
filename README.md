@@ -8,4 +8,4 @@ npm run dev
 ```
 
 ## Or you can access it here:
-https://helemand.github.io/twn
+https://resilient-cajeta-37dffe.netlify.app/
