@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
 import "./index.scss";
 import { formatPhoneNumber, reverseDateFormat } from "../../assets/utils";
 import { Person } from "../../types";
+import ExpandedRow from "./ExpandedRow";
 
 interface TableBodyProps {
   data: Person[];
@@ -24,8 +24,6 @@ const TableBody: React.FC<TableBodyProps> = ({ data, currentPage }) => {
     .slice(startIndex, endIndex)
     .map(({ id, firstname, surname, sex, phone, image, body, birthday }) => {
       const isRowExpanded = expandedRow === id;
-      const truncatedBody = `${body.split(/<\/p>\s*<p>/)[0]}...`;
-
       return (
         <React.Fragment key={id}>
           <tr
@@ -50,24 +48,7 @@ const TableBody: React.FC<TableBodyProps> = ({ data, currentPage }) => {
             <td>{formatPhoneNumber(phone as string)}</td>
           </tr>
           {isRowExpanded && (
-            <tr className="expanded-tablerow" role="button" tabIndex={0}>
-              <td colSpan={5}>
-                <div className="expanded-content">
-                  <div
-                    className="content-img"
-                    style={{
-                      backgroundImage: `url(${image.large})`,
-                    }}
-                  />
-                  <div className="body">
-                    <p dangerouslySetInnerHTML={{ __html: truncatedBody }} />
-                    <NavLink className="form-button" to={`/article/${id}`}>
-                      loe rohkem
-                    </NavLink>
-                  </div>
-                </div>
-              </td>
-            </tr>
+            <ExpandedRow imageUrl={image.large} id={id} body={body} />
           )}
         </React.Fragment>
       );
