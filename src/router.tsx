@@ -7,7 +7,9 @@ import Table from "./pages/Table";
 import Game from "./pages/Game";
 
 import Home from "./pages/Home";
-export const router = createBrowserRouter([
+import NotFound from "./pages/NotFound";
+
+const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
@@ -40,8 +42,10 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "*",
-        element: <div>NOT FOUND</div>,
+        element: <NotFound />,
       },
     ],
   },
 ]);
+
+export default router;

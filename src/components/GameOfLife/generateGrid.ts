@@ -8,7 +8,7 @@ const calculateAliveCellPercentage = (
   if (totalCells === 0) {
     return 0;
   }
-  return Math.round((aliveCellCount / totalCells) * 100);
+  return Number(((aliveCellCount / totalCells) * 100).toFixed(1));
 };
 
 const generateEmptyGrid: (
