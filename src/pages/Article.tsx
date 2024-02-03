@@ -1,52 +1,38 @@
-import Image from "../components/Image";
+import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import Loader from "../components/Loader";
-import useFetchData from "../hooks/useFetchData";
-import { ImageType } from "../types";
 import { getArticleData } from "../api";
-
-type Article = {
-  body: string;
-  image: ImageType;
-  intro: string;
-  tags: string[];
-  title: string;
-};
+import Image from "../components/Image";
 
 const Article = () => {
   const { id } = useParams();
 
-  const { isPending, error, data } = useFetchData<Article>({
-    queryKey: ["articleData", id as string],
+  const { isPending, data } = useQuery({
+    queryKey: ["articleData", id],
     queryFn: () => getArticleData(id || "972d2b8a"),
+    throwOnError: true,
   });
 
-  if (isPending) return <Loader />;
+  if (isPending || !data) return <Loader />;
 
-  if (error) return "An error has occurred: " + error.message;
   return (
-    <div className="container">
-      <div className="inner">
-        <h1 tabIndex={0} aria-label={data.title}>
-          {data.title}
-        </h1>
-        <div
-          className="intro"
-          dangerouslySetInnerHTML={{ __html: data.intro }}
-        ></div>
-        <Image
-          url={data.image.large}
-          alt={data.image.alt}
-          title={data.image.title}
-        />
-        <div dangerouslySetInnerHTML={{ __html: data.body }} />
-        {data.tags.map((tag: string, i: number) => (
-          <div key={tag + i} className="chip">
+    <>
+      <h1 aria-label={data.title}>{data.title}</h1>
+      <div className="intro" dangerouslySetInnerHTML={{ __html: data.intro }} />
+      <Image
+        url={data.image.large}
+        alt={data.image.alt}
+        title={data.image.title}
+      />
+      <div dangerouslySetInnerHTML={{ __html: data.body }} />
+      {data.tags
+        .map((tag, i) => ({ tag, key: `${tag}-${i}` }))
+        .map(({ tag, key }) => (
+          <div key={key} className="chip">
             {tag}
           </div>
         ))}
-      </div>
-    </div>
+    </>
   );
 };
 

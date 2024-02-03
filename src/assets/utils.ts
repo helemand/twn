@@ -36,11 +36,20 @@ export const reverseDateFormat = (inputDate: string) => {
 
 export const traverseGrid = (
   grid: Grid,
-  cb: (cell: Cell, i: number, j: number) => void
+  cb: (cell: Cell, i: number, j: number) => void,
 ) => {
   grid.forEach((rows, i) => {
     rows.forEach((cell, j) => {
       cb(cell, i, j);
     });
   });
+};
+
+export const getAliveCellCount = (grid: Grid) =>
+  grid.flat().filter((cell) => cell === Cell.ALIVE).length;
+
+export const cellColors = {
+  [Cell.ALIVE]: "white",
+  [Cell.GRAVE]: "#adf0d028",
+  [Cell.NEUTRAL]: "#3a3d57",
 };

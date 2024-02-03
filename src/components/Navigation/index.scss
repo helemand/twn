@@ -48,7 +48,16 @@
 
 .logo {
   margin: 1.5625rem 0 3.125rem;
-  cursor: pointer;
+  background: none;
+  border: none;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  transition: none;
+
+  img {
+    width: 100%;
+  }
 }
 
 .list-container {
@@ -69,5 +78,13 @@
 
   .sidenav-open {
     transform: translate(0);
+
+    .logo {
+      display: none;
+    }
+
+    ul {
+      padding-top: 2.5rem;
+    }
   }
 }

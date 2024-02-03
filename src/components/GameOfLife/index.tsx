@@ -1,6 +1,5 @@
-import { GameState } from "../../store/gameSlice";
-import { getCellColor } from "../../assets/utils/gameOfLifeUtils";
-import { Cell, Grid } from "../../types";
+import { cellColors } from "../../assets/utils";
+import { Grid } from "../../types";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import "./index.scss";
 
@@ -9,26 +8,28 @@ interface GameProps {
 }
 
 const GameOfLife: React.FC<GameProps> = ({ grid }) => {
-  const state: GameState = useAppSelector((state) => state.game);
+  const state = useAppSelector((s) => s.game);
 
   return (
     <div className="game-container">
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: `repeat(${state.gridWidth}, 12px)`,
+          gridTemplateColumns: `repeat(${state.gridWidth}, 1fr)`,
         }}
       >
         {grid.map((rows, i) =>
-          rows.map((cell: Cell, j) => (
-            <div
-              key={`${i}-${j}`}
-              className="grid-cell"
-              style={{
-                backgroundColor: getCellColor(cell),
-              }}
-            />
-          ))
+          rows
+            .map((cell, j) => ({ cell, key: `${i}-${j}` }))
+            .map(({ cell, key }) => (
+              <div
+                key={key}
+                className="grid-cell"
+                style={{
+                  backgroundColor: cellColors[cell],
+                }}
+              />
+            )),
         )}
       </div>
     </div>

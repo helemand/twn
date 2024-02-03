@@ -12,15 +12,13 @@ interface MobileHeaderTypes {
 const MobileHeader: React.FC<MobileHeaderTypes> = ({
   menuOpen,
   toggleMenu,
-}) => {
-  return (
-    <div className="mobile-header">
-      <button className="toggle-button" onClick={toggleMenu}>
-        <FontAwesomeIcon icon={menuOpen ? faTimes : faBars} />
-      </button>
-      <img src={twnLogo} />
-    </div>
-  );
-};
+}) => (
+  <div className="mobile-header">
+    <button type="button" className="toggle-button" onClick={toggleMenu}>
+      <FontAwesomeIcon icon={menuOpen ? faTimes : faBars} />
+    </button>
+    <img src={twnLogo} alt="TWN-logo" aria-label="TWN-logo" />
+  </div>
+);
 
 export default MobileHeader;

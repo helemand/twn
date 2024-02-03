@@ -1,10 +1,10 @@
-import Paginator from "../components/Paginator";
 import { useState } from "react";
-import { SortColumn, SortOrder, Fields, Persons, Person } from "../types";
+import { useQuery } from "@tanstack/react-query";
+import Paginator from "../components/Paginator";
+import { SortColumn, SortOrder, Fields, Person } from "../types";
 import TableHeader from "../components/Table/TableHeader";
 import TableBody from "../components/Table/TableBody";
 import Loader from "../components/Loader";
-import useFetchData from "../hooks/useFetchData";
 import { getTableData } from "../api";
 
 const Table = () => {
@@ -21,9 +21,10 @@ const Table = () => {
     phone: "Telefon",
   };
 
-  const { isError, isPending, data, error } = useFetchData<Persons>({
+  const { isPending, data } = useQuery({
     queryKey: ["tableData"],
     queryFn: getTableData,
+    throwOnError: true,
   });
 
   const totalPages = Math.ceil((data?.list.length || 200) / itemsPerPage);
@@ -37,72 +38,66 @@ const Table = () => {
       if (sortColumn === column) {
         if (prevOrder === SortOrder.ASC) {
           return SortOrder.DESC;
-        } else if (prevOrder === SortOrder.DESC) {
-          return SortOrder.DEFAULT;
-        } else {
-          return SortOrder.ASC;
         }
-      } else {
-        setSortColumn(column);
+        if (prevOrder === SortOrder.DESC) {
+          return SortOrder.DEFAULT;
+        }
         return SortOrder.ASC;
       }
+      setSortColumn(column);
+      return SortOrder.ASC;
     });
   };
 
   const sortPersons = <K extends keyof Person>(
     persons: Person[],
-    sortColumn: K,
-    order: SortOrder
-  ) => {
-    return [...persons].sort((a, b) => {
-      const [valueA, valueB] = [String(a[sortColumn]), String(b[sortColumn])];
+    column: K,
+    order: SortOrder,
+  ) =>
+    [...persons].sort((a, b) => {
+      const [valueA, valueB] = [String(a[column]), String(b[column])];
 
       if (order === SortOrder.ASC) {
         return valueA.localeCompare(valueB);
-      } else if (order === SortOrder.DESC) {
-        return valueB.localeCompare(valueA);
-      } else {
-        return 0;
       }
+      if (order === SortOrder.DESC) {
+        return valueB.localeCompare(valueA);
+      }
+      return 0;
     });
-  };
 
-  if (isPending) return <Loader />;
-
-  if (isError) return "An error has occurred: " + error?.message;
+  if (isPending || !data) return <Loader />;
 
   return (
-    <div className="container">
-      <div className="inner">
-        <h1>nimekiri</h1>
-        {isPending && <Loader />}
-        <div className="table-wrapper">
-          <table>
-            <thead>
-              <tr>
-                <TableHeader
-                  fields={fields}
-                  sortColumn={sortColumn}
-                  sortOrder={sortOrder}
-                  handleSortChange={handleSortChange}
-                />
-              </tr>
-            </thead>
-            <tbody>
-              <TableBody
-                data={sortPersons(data.list, sortColumn, sortOrder)}
-                currentPage={currentPage}
+    <>
+      <h1>nimekiri</h1>
+      {isPending && <Loader />}
+      <div className="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <TableHeader
+                fields={fields}
+                sortColumn={sortColumn}
+                sortOrder={sortOrder}
+                handleSortChange={handleSortChange}
               />
-            </tbody>
-          </table>
-        </div>
-        <Paginator
-          onPageChange={handlePageChange}
-          currentPage={currentPage}
-          totalPages={totalPages}
-        />
+            </tr>
+          </thead>
+          <tbody>
+            <TableBody
+              data={sortPersons(data.list, sortColumn, sortOrder)}
+              currentPage={currentPage}
+            />
+          </tbody>
+        </table>
       </div>
-    </div>
+      <Paginator
+        onPageChange={handlePageChange}
+        currentPage={currentPage}
+        totalPages={totalPages}
+      />
+    </>
   );
 };
 

@@ -38,3 +38,11 @@ export enum Cell {
 }
 
 export type Grid = Cell[][];
+
+export type Article = {
+  body: string;
+  image: ImageType;
+  intro: string;
+  tags: string[];
+  title: string;
+};

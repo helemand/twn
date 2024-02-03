@@ -1,7 +1,7 @@
+import { useState } from "react";
 import Sidenav from "../Sidenav";
 import MobileHeader from "../MobileHeader";
 import "./index.scss";
-import { useState } from "react";
 
 const Navigation = () => {
   const [menuOpen, setMenuOpen] = useState(false);

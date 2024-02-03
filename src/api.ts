@@ -1,6 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import Article from "./pages/Article";
-import { Persons } from "./types";
+import { Article, Persons } from "./types";
 import { convertPersonalCodeToDate } from "./assets/utils";
 
 const ApiClient = axios.create({

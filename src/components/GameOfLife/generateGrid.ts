@@ -1,10 +1,9 @@
 import { Cell, Grid } from "../../types";
-import { getAliveCellCount } from "../../assets/utils/gameOfLifeUtils";
-import { traverseGrid } from "../../assets/utils";
+import { getAliveCellCount, traverseGrid } from "../../assets/utils";
 
 const calculateAliveCellPercentage = (
   aliveCellCount: number,
-  totalCells: number
+  totalCells: number,
 ): number => {
   if (totalCells === 0) {
     return 0;
@@ -15,26 +14,26 @@ const calculateAliveCellPercentage = (
 const generateEmptyGrid: (
   rows: number,
   cols: number,
-  prevGrid: Grid
+  prevGrid: Grid,
 ) => Grid = (rows: number, cols: number, prevGrid: Grid) => {
-  const newGrid = Array.from({ length: rows }, () =>
-    Array(cols).fill(Cell.NEUTRAL)
+  const nextGrid = Array.from({ length: rows }, () =>
+    Array(cols).fill(Cell.NEUTRAL),
   );
 
   traverseGrid(prevGrid, (cell, x, y) => {
     if (cell === Cell.GRAVE) {
-      newGrid[x][y] = Cell.GRAVE;
+      nextGrid[x][y] = Cell.GRAVE;
     }
   });
 
-  return newGrid;
+  return nextGrid;
 };
 
 const generateGrid = (
   prevGrid: Grid,
   height: number,
   width: number,
-  progressCallback: (a: number) => void
+  progressCallback: (a: number) => void,
 ) => {
   const nextGrid = generateEmptyGrid(height, width, prevGrid);
 
@@ -53,7 +52,7 @@ const generateGrid = (
       .filter((neighbour) => neighbour);
 
     const numAliveNeighbors = neighbors.filter(
-      (neighbor) => neighbor === Cell.ALIVE
+      (neighbor) => neighbor === Cell.ALIVE,
     ).length;
 
     if (

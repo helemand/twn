@@ -1,11 +1,11 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import twnLogo from "../assets/imgs/logo.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFile,
   faPhotoVideo,
   faTable,
 } from "@fortawesome/free-solid-svg-icons";
+import twnLogo from "../assets/imgs/logo.svg";
 
 interface SidenavTypes {
   menuOpen: boolean;
@@ -18,12 +18,10 @@ const Sidenav: React.FC<SidenavTypes> = ({ menuOpen, closeMenu }) => {
 
   return (
     <nav className={menuOpen ? "sidenav sidenav-open" : "sidenav"}>
-      <img
-        tabIndex={0}
-        onClick={handleClick}
-        className="logo"
-        src={twnLogo}
-      ></img>
+      <button className="logo" type="button" tabIndex={0} onClick={handleClick}>
+        <img alt="TWN-logo" src={twnLogo} />
+      </button>
+
       <ul className="list-container">
         <li>
           <NavLink

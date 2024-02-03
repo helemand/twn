@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import "./index.scss";
 import {
   GameState,
@@ -8,8 +9,6 @@ import {
   setLifeProbability,
   setPaused,
 } from "../../store/gameSlice";
-
-import { useDispatch } from "react-redux";
 import Select from "../Select";
 import { useAppSelector } from "../../hooks/useAppSelector";
 
@@ -26,20 +25,20 @@ const GameInputs: React.FC<GameInputsProps> = ({ onPauseResume, paused }) => {
   const [selectedWidth, setSelectedWidth] = useState<number>(gridWidth);
   const [selectedHeight, setSelectedHeight] = useState<number>(gridHeight);
 
-  const handleGridWidthChange = (value: number) => {
-    setSelectedWidth(value);
+  const handleGridWidthChange = (value: string) => {
+    setSelectedWidth(Number(value));
   };
 
-  const handleGridHeightChange = (value: number) => {
-    setSelectedHeight(value);
+  const handleGridHeightChange = (value: string) => {
+    setSelectedHeight(Number(value));
   };
 
   const handleSpeedChange = (value: string) => {
     dispatch(setSpeed(value as "normal" | "slow" | "fast"));
   };
 
-  const handleProbabilityChange = (value: number) => {
-    dispatch(setLifeProbability(value));
+  const handleProbabilityChange = (value: string) => {
+    dispatch(setLifeProbability(Number(value)));
   };
 
   const handleApplyClick = () => {
@@ -51,26 +50,25 @@ const GameInputs: React.FC<GameInputsProps> = ({ onPauseResume, paused }) => {
   const generateSelectOptions = (
     min: number,
     max: number,
-    increment: number
+    increment: number,
   ) => {
     const options = [];
     for (let i = min; i <= max; i += increment) {
       options.push(
         <option key={i} value={i}>
           {i}
-        </option>
+        </option>,
       );
     }
     return options;
   };
 
-  const generateSpeedOption = () => {
-    return ["normal", "slow", "fast"].map((option) => (
+  const generateSpeedOption = () =>
+    ["normal", "slow", "fast"].map((option) => (
       <option key={option} value={option}>
         {option}
       </option>
     ));
-  };
 
   return (
     <form className="game-form">

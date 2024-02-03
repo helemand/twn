@@ -1,44 +1,37 @@
 import { useState, useCallback, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { useInterval } from "usehooks-ts";
 import GameInputs from "../components/GameInputs";
 import ProgressBar from "../components/ProgressBar";
-import { GameState, setPaused } from "../store/gameSlice";
-import { useInterval } from "usehooks-ts";
-import GameOfLife from "../components/GameOfLife/index.tsx";
-import generateGrid from "../components/GameOfLife/generateGrid.ts";
+import { setPaused } from "../store/gameSlice";
+import GameOfLife from "../components/GameOfLife";
+import generateGrid from "../components/GameOfLife/generateGrid";
 import { Cell, Grid } from "../types";
-import { useAppSelector } from "../hooks/useAppSelector.ts";
-import { useDispatch } from "react-redux";
-
-const timeoutSpeed = {
-  normal: 300,
-  slow: 1000,
-  fast: 100,
-};
+import { useAppSelector } from "../hooks/useAppSelector";
 
 const populateInitialGrid: (
   rows: number,
   cols: number,
-  probability: number
-) => Grid = (rows: number, cols: number, probability: number) => {
-  return Array.from({ length: rows }, () =>
+  probability: number,
+) => Grid = (rows: number, cols: number, probability: number) =>
+  Array.from({ length: rows }, () =>
     Array(cols)
       .fill(Cell.NEUTRAL)
-      .map(() => {
-        return Math.random() > probability / 100 ? Cell.NEUTRAL : Cell.ALIVE;
-      })
+      .map(() =>
+        Math.random() > probability / 100 ? Cell.NEUTRAL : Cell.ALIVE,
+      ),
   );
-};
 
 const Game = () => {
   const dispatch = useDispatch();
-  const state: GameState = useAppSelector((state) => state.game);
+  const state = useAppSelector((s) => s.game);
 
   const [grid, setGrid] = useState(
     populateInitialGrid(
       state.gridHeight,
       state.gridWidth,
-      state.lifeProbability
-    )
+      state.lifeProbability,
+    ),
   );
   const [progress, setProgress] = useState(0);
 
@@ -47,38 +40,35 @@ const Game = () => {
       populateInitialGrid(
         state.gridHeight,
         state.gridWidth,
-        state.lifeProbability
-      )
+        state.lifeProbability,
+      ),
     );
   }, [state.gridHeight, state.gridWidth, state.lifeProbability]);
 
+  const runSimulation = useCallback(
+    () =>
+      setGrid((prevGrid) =>
+        generateGrid(prevGrid, state.gridHeight, state.gridWidth, setProgress),
+      ),
+    [state.gridHeight, state.gridWidth, setProgress],
+  );
+
   useInterval(() => {
     if (state.paused) return;
-    runSimulation(setProgress);
-  }, timeoutSpeed[state.speed]);
-
-  const runSimulation = useCallback(
-    (setProgress: (a: number) => void) => {
-      setGrid((prevGrid) =>
-        generateGrid(prevGrid, state.gridHeight, state.gridWidth, setProgress)
-      );
-    },
-    [state.gridHeight, state.gridWidth]
-  );
+    runSimulation();
+  }, state.speed);
 
   const togglePause = () => {
     dispatch(setPaused(!state.paused));
   };
 
   return (
-    <div className="container">
-      <div className="inner">
-        <h1>Conways Game of Life</h1>
-        <GameInputs onPauseResume={togglePause} paused={state.paused} />
-        <ProgressBar percentage={progress} />
-        <GameOfLife grid={grid} />
-      </div>
-    </div>
+    <>
+      <h1>Conways Game of Life</h1>
+      <GameInputs onPauseResume={togglePause} paused={state.paused} />
+      <ProgressBar percentage={progress} />
+      <GameOfLife grid={grid} />
+    </>
   );
 };
 

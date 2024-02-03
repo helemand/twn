@@ -24,12 +24,12 @@ const Paginator: React.FC<PaginatorProps> = ({
 
   const pageNumbers = Array.from(
     { length: endPage - startPage + 1 },
-    (_, index) => startPage + index
+    (_, index) => startPage + index,
   );
 
   const handleClick = (
     newPage: number,
-    event: React.MouseEvent<HTMLButtonElement>
+    event: React.MouseEvent<HTMLButtonElement>,
   ) => {
     event.preventDefault();
     onPageChange(newPage);

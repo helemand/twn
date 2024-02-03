@@ -4,8 +4,7 @@ import {
   faSortDown,
   faSort,
 } from "@fortawesome/free-solid-svg-icons";
-import { ImageType } from "../../types";
-import { Fields, SortColumn, SortOrder } from "../../types";
+import { Fields, SortColumn, SortOrder, ImageType } from "../../types";
 
 export type Person = {
   body: string;
@@ -44,6 +43,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
       <th key={field}>
         {isSortable ? (
           <button
+            type="button"
             className="invisible-button"
             onClick={
               isSortable

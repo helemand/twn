@@ -2,10 +2,16 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export type Gamespeed = "normal" | "slow" | "fast";
 
+const timeoutSpeed = {
+  normal: 300,
+  slow: 1000,
+  fast: 100,
+};
+
 export interface GameState {
   gridWidth: number;
   gridHeight: number;
-  speed: Gamespeed;
+  speed: number;
   lifeProbability: number;
   paused: boolean;
 }
@@ -13,7 +19,7 @@ export interface GameState {
 const initialState: GameState = {
   gridWidth: 70,
   gridHeight: 30,
-  speed: "normal",
+  speed: timeoutSpeed.normal,
   lifeProbability: 50,
   paused: false,
 };
@@ -29,7 +35,7 @@ export const gameSlice = createSlice({
       state.gridHeight = action.payload;
     },
     setSpeed: (state: GameState, action: PayloadAction<Gamespeed>) => {
-      state.speed = action.payload;
+      state.speed = timeoutSpeed[action.payload];
     },
     setLifeProbability: (state: GameState, action: PayloadAction<number>) => {
       state.lifeProbability = action.payload;
