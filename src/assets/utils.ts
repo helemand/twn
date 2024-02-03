@@ -53,3 +53,16 @@ export const cellColors = {
   [Cell.GRAVE]: "#adf0d028",
   [Cell.NEUTRAL]: "#3a3d57",
 };
+
+export const populateInitialGrid: (
+  rows: number,
+  cols: number,
+  probability: number,
+) => Grid = (rows: number, cols: number, probability: number) =>
+  Array.from({ length: rows }, () =>
+    Array(cols)
+      .fill(Cell.NEUTRAL)
+      .map(() =>
+        Math.random() > probability / 100 ? Cell.NEUTRAL : Cell.ALIVE,
+      ),
+  );

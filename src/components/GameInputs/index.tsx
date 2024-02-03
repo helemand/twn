@@ -8,9 +8,11 @@ import {
   setSpeed,
   setLifeProbability,
   setPaused,
+  setGrid,
 } from "../../store/gameSlice";
 import Select from "../Select";
 import { useAppSelector } from "../../hooks/useAppSelector";
+import { populateInitialGrid } from "../../assets/utils";
 
 interface GameInputsProps {
   onPauseResume: () => void;
@@ -44,6 +46,10 @@ const GameInputs: React.FC<GameInputsProps> = ({ onPauseResume, paused }) => {
   const handleApplyClick = () => {
     dispatch(setGridWidth(Number(selectedWidth)));
     dispatch(setGridHeight(Number(selectedHeight)));
+
+    dispatch(
+      setGrid(populateInitialGrid(gridHeight, gridWidth, lifeProbability)),
+    );
     dispatch(setPaused(false));
   };
 
