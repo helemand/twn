@@ -6,6 +6,7 @@ import {
   setGridWidth,
   setSpeed,
   setLifeProbability,
+  setPaused,
 } from "../../store/gameSlice";
 
 import { useDispatch } from "react-redux";
@@ -44,6 +45,7 @@ const GameInputs: React.FC<GameInputsProps> = ({ onPauseResume, paused }) => {
   const handleApplyClick = () => {
     dispatch(setGridWidth(Number(selectedWidth)));
     dispatch(setGridHeight(Number(selectedHeight)));
+    dispatch(setPaused(false));
   };
 
   const generateSelectOptions = (

@@ -7,6 +7,7 @@ export interface GameState {
   gridHeight: number;
   speed: Gamespeed;
   lifeProbability: number;
+  paused: boolean;
 }
 
 const initialState: GameState = {
@@ -14,6 +15,7 @@ const initialState: GameState = {
   gridHeight: 30,
   speed: "normal",
   lifeProbability: 50,
+  paused: false,
 };
 
 export const gameSlice = createSlice({
@@ -32,9 +34,17 @@ export const gameSlice = createSlice({
     setLifeProbability: (state: GameState, action: PayloadAction<number>) => {
       state.lifeProbability = action.payload;
     },
+    setPaused: (state: GameState, action: PayloadAction<boolean>) => {
+      state.paused = action.payload;
+    },
   },
 });
 
-export const { setGridWidth, setGridHeight, setSpeed, setLifeProbability } =
-  gameSlice.actions;
+export const {
+  setGridWidth,
+  setGridHeight,
+  setSpeed,
+  setLifeProbability,
+  setPaused,
+} = gameSlice.actions;
 export default gameSlice.reducer;

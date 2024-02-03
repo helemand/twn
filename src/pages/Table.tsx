@@ -17,7 +17,7 @@ const Table = () => {
     firstname: "Eesnimi",
     surname: "Perekonnanimi",
     sex: "Sugu",
-    personal_code: "Sünnikuupäev",
+    birthday: "Sünnikuupäev",
     phone: "Telefon",
   };
 
@@ -33,14 +33,20 @@ const Table = () => {
   };
 
   const handleSortChange = (column: SortColumn) => {
-    setSortOrder((prevOrder) =>
-      sortColumn === column
-        ? prevOrder === SortOrder.ASC
-          ? SortOrder.DESC
-          : SortOrder.ASC
-        : SortOrder.ASC
-    );
-    setSortColumn(column);
+    setSortOrder((prevOrder) => {
+      if (sortColumn === column) {
+        if (prevOrder === SortOrder.ASC) {
+          return SortOrder.DESC;
+        } else if (prevOrder === SortOrder.DESC) {
+          return SortOrder.DEFAULT;
+        } else {
+          return SortOrder.ASC;
+        }
+      } else {
+        setSortColumn(column);
+        return SortOrder.ASC;
+      }
+    });
   };
 
   const sortPersons = <K extends keyof Person>(
@@ -50,9 +56,14 @@ const Table = () => {
   ) => {
     return [...persons].sort((a, b) => {
       const [valueA, valueB] = [String(a[sortColumn]), String(b[sortColumn])];
-      return order === SortOrder.ASC
-        ? valueA.localeCompare(valueB)
-        : valueB.localeCompare(valueA);
+
+      if (order === SortOrder.ASC) {
+        return valueA.localeCompare(valueB);
+      } else if (order === SortOrder.DESC) {
+        return valueB.localeCompare(valueA);
+      } else {
+        return 0;
+      }
     });
   };
 

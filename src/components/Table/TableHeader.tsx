@@ -41,23 +41,32 @@ const TableHeader: React.FC<TableHeaderProps> = ({
     const isCurrentSortColumn = field === sortColumn;
 
     return (
-      <th
-        key={field}
-        onClick={
-          isSortable ? () => handleSortChange(field as SortColumn) : undefined
-        }
-      >
-        {fields[field]}
-        {isSortable && (
-          <span className="icon-container">
-            {isCurrentSortColumn && sortOrder === SortOrder.ASC && (
-              <FontAwesomeIcon icon={faSortUp} />
-            )}
-            {isCurrentSortColumn && sortOrder === SortOrder.DESC && (
-              <FontAwesomeIcon icon={faSortDown} />
-            )}
-            {!isCurrentSortColumn && <FontAwesomeIcon icon={faSort} />}
-          </span>
+      <th key={field}>
+        {isSortable ? (
+          <button
+            className="invisible-button"
+            onClick={
+              isSortable
+                ? () => handleSortChange(field as SortColumn)
+                : undefined
+            }
+          >
+            {fields[field]}
+            <span className="icon-container">
+              {isCurrentSortColumn && sortOrder === SortOrder.ASC && (
+                <FontAwesomeIcon icon={faSortUp} />
+              )}
+              {isCurrentSortColumn && sortOrder === SortOrder.DESC && (
+                <FontAwesomeIcon icon={faSortDown} />
+              )}
+              {isCurrentSortColumn && sortOrder === SortOrder.DEFAULT && (
+                <FontAwesomeIcon icon={faSort} />
+              )}
+              {!isCurrentSortColumn && <FontAwesomeIcon icon={faSort} />}
+            </span>
+          </button>
+        ) : (
+          fields[field]
         )}
       </th>
     );

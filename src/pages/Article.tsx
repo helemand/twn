@@ -27,7 +27,9 @@ const Article = () => {
   return (
     <div className="container">
       <div className="inner">
-        <h1>{data.title}</h1>
+        <h1 tabIndex={0} aria-label={data.title}>
+          {data.title}
+        </h1>
         <div
           className="intro"
           dangerouslySetInnerHTML={{ __html: data.intro }}

@@ -41,8 +41,19 @@ const TableBody: React.FC<TableBodyProps> = ({ data, currentPage }) => {
           return (
             <React.Fragment key={id}>
               <tr
+                role="button"
+                tabIndex={0}
                 onClick={() => expandTableRow(id)}
-                className={isRowExpanded ? "expanded-tablerow-header" : ""}
+                onKeyDown={(e) => {
+                  if (e.key == "Enter") {
+                    expandTableRow(id);
+                  }
+                }}
+                className={
+                  isRowExpanded
+                    ? "expanded-tablerow-header"
+                    : "clickable-tablerow"
+                }
               >
                 <td>
                   <span>{firstname}</span>
@@ -53,7 +64,7 @@ const TableBody: React.FC<TableBodyProps> = ({ data, currentPage }) => {
                 <td>{formatPhoneNumber(phone as string)}</td>
               </tr>
               {isRowExpanded && (
-                <tr className="expanded-tablerow">
+                <tr className="expanded-tablerow" role="button" tabIndex={0}>
                   <td colSpan={5}>
                     <div className="expanded-content">
                       <div

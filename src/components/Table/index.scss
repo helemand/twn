@@ -25,67 +25,28 @@ th {
   text-align: left;
   padding: 0.625rem 1rem;
   border-bottom: var(--color-text-secondary) 0.0625rem solid;
-  cursor: pointer;
+
+  .invisible-button {
+    appearance: none;
+    background: none;
+    border: none;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    padding: 0;
+    font-size: 1rem;
+    font-weight: bold;
+  }
 }
 
 td {
   padding: 0.625rem 1rem;
   border-bottom: var(--color-text-secondary) 0.0625rem solid;
   width: 20%;
-  cursor: pointer;
   font-weight: 400;
 }
 
 tr:nth-child(even) {
   background: rgba(255, 255, 255, 0.1);
-}
-
-.paginator {
-  text-align: center;
-  margin-top: 20px;
-
-  button {
-    cursor: pointer;
-    font-size: 1rem;
-    background: none;
-    border: none;
-    color: var(--color-text-secondary);
-    width: 2.5em;
-    height: 2.5em;
-    border-radius: 2.5em;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0;
-    transition: none;
-    margin: 0 1rem;
-    margin-right: 0;
-    font-weight: 700;
-    &:hover {
-      border: var(--color-text-secondary) 0.0625rem solid;
-    }
-
-    &.active {
-      background-color: var(--color-text-secondary);
-      color: #333;
-      font-weight: bold;
-      font-size: 1rem;
-      width: 2.5em;
-      height: 2.5em;
-      border-radius: 2.5em;
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      padding: 0;
-      transition: none;
-    }
-
-    &:disabled {
-      opacity: 0.4;
-      pointer-events: none;
-      border: none;
-    }
-  }
 }
 
 .icon-container {
@@ -95,14 +56,14 @@ tr:nth-child(even) {
 .expanded-tablerow-header {
   background: var(--color-text-secondary) !important;
   color: #333;
+  td {
+    cursor: pointer;
+  }
 }
 
 .expanded-tablerow {
   background: var(--color-text-secondary) !important;
   color: #333;
-  td {
-    cursor: default;
-  }
 }
 
 .expanded-content {
@@ -133,21 +94,16 @@ tr:nth-child(even) {
   background-color: #f1f1f1;
 }
 
-@media screen and (max-width: 960px) {
-  th {
-    font-size: 0.875rem;
-    padding: 0.375rem 0.5rem;
+.clickable-tablerow {
+  td {
+    cursor: pointer;
   }
+}
 
+@media screen and (max-width: 960px) {
+  th,
   td {
     font-size: 0.875rem;
     padding: 0.375rem 0.5rem;
-  }
-
-  .paginator {
-    button {
-      width: 2rem;
-      height: 2rem;
-    }
   }
 }

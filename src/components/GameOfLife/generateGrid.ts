@@ -1,5 +1,6 @@
 import { Cell, Grid } from "../../types";
 import { getAliveCellCount } from "../../assets/utils/gameOfLifeUtils";
+import { traverseGrid } from "../../assets/utils";
 
 const calculateAliveCellPercentage = (
   aliveCellCount: number,
@@ -27,17 +28,6 @@ const generateEmptyGrid: (
   });
 
   return newGrid;
-};
-
-const traverseGrid = (
-  grid: Grid,
-  cb: (cell: Cell, i: number, j: number) => void
-) => {
-  grid.forEach((rows, i) => {
-    rows.forEach((cell, j) => {
-      cb(cell, i, j);
-    });
-  });
 };
 
 const generateGrid = (

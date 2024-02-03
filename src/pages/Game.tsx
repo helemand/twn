@@ -1,12 +1,13 @@
 import { useState, useCallback, useEffect } from "react";
 import GameInputs from "../components/GameInputs";
 import ProgressBar from "../components/ProgressBar";
-import { GameState } from "../store/gameSlice";
+import { GameState, setPaused } from "../store/gameSlice";
 import { useInterval } from "usehooks-ts";
 import GameOfLife from "../components/GameOfLife/index.tsx";
 import generateGrid from "../components/GameOfLife/generateGrid.ts";
 import { Cell, Grid } from "../types";
 import { useAppSelector } from "../hooks/useAppSelector.ts";
+import { useDispatch } from "react-redux";
 
 const timeoutSpeed = {
   normal: 300,
@@ -29,6 +30,7 @@ const populateInitialGrid: (
 };
 
 const Game = () => {
+  const dispatch = useDispatch();
   const state: GameState = useAppSelector((state) => state.game);
 
   const [grid, setGrid] = useState(
@@ -38,8 +40,7 @@ const Game = () => {
       state.lifeProbability
     )
   );
-  const [progress, setProgress] = useState(100);
-  const [paused, setPaused] = useState(false);
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     setGrid(
@@ -52,7 +53,7 @@ const Game = () => {
   }, [state.gridHeight, state.gridWidth, state.lifeProbability]);
 
   useInterval(() => {
-    if (paused) return;
+    if (state.paused) return;
     runSimulation(setProgress);
   }, timeoutSpeed[state.speed]);
 
@@ -66,14 +67,14 @@ const Game = () => {
   );
 
   const togglePause = () => {
-    setPaused((value) => !value);
+    dispatch(setPaused(!state.paused));
   };
 
   return (
     <div className="container">
       <div className="inner">
         <h1>Conways Game of Life</h1>
-        <GameInputs onPauseResume={togglePause} paused={paused} />
+        <GameInputs onPauseResume={togglePause} paused={state.paused} />
         <ProgressBar percentage={progress} />
         <GameOfLife grid={grid} />
       </div>

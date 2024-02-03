@@ -10,10 +10,14 @@ const Navigation = () => {
     setMenuOpen(!menuOpen);
   };
 
+  const handleCloseMenu = () => {
+    setMenuOpen(false);
+  };
+
   return (
     <>
       <MobileHeader menuOpen={menuOpen} toggleMenu={handleToggleMenu} />
-      <Sidenav menuOpen={menuOpen} />
+      <Sidenav menuOpen={menuOpen} closeMenu={handleCloseMenu} />
     </>
   );
 };

@@ -1,3 +1,4 @@
+import "./index.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronRight,
@@ -37,6 +38,7 @@ const Paginator: React.FC<PaginatorProps> = ({
   return (
     <div className="paginator">
       <button
+        className="transparent-button"
         type="button"
         onClick={(e) => handleClick(currentPage - 1, e)}
         disabled={currentPage === 1}
@@ -48,12 +50,17 @@ const Paginator: React.FC<PaginatorProps> = ({
           type="button"
           key={pageNumber}
           onClick={(e) => handleClick(pageNumber, e)}
-          className={pageNumber === currentPage ? "active" : ""}
+          className={
+            pageNumber === currentPage
+              ? "paginator-button active"
+              : "paginator-button"
+          }
         >
           {pageNumber}
         </button>
       ))}
       <button
+        className="transparent-button"
         type="button"
         onClick={(e) => handleClick(currentPage + 1, e)}
         disabled={currentPage === totalPages}

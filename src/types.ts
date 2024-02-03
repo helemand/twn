@@ -26,6 +26,7 @@ export type Fields = {
 export enum SortOrder {
   ASC = "ASC",
   DESC = "DESC",
+  DEFAULT = "DEFAULT",
 }
 
 export type SortColumn = keyof Person;
