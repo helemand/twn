@@ -9,7 +9,7 @@ import {
   setLifeProbability,
   setPaused,
   setGrid,
-  Gamespeed,
+  GameSpeed,
 } from "../../store/gameSlice";
 import Select from "../Select";
 import { useAppSelector } from "../../hooks/useAppSelector";
@@ -37,7 +37,7 @@ const GameInputs: React.FC<GameInputsProps> = ({ onPauseResume, paused }) => {
   };
 
   const handleSpeedChange = (value: string) => {
-    dispatch(setSpeed(value as Gamespeed));
+    dispatch(setSpeed(value as unknown as GameSpeed));
   };
 
   const handleProbabilityChange = (value: string) => {
@@ -70,10 +70,10 @@ const GameInputs: React.FC<GameInputsProps> = ({ onPauseResume, paused }) => {
     return options;
   };
 
-  const generateSpeedOption = () =>
-    ["normal", "slow", "fast"].map((option) => (
+  const generateSpeedOptions = () =>
+    [GameSpeed.Normal, GameSpeed.Slow, GameSpeed.Fast].map((option) => (
       <option key={option} value={option}>
-        {option}
+        {GameSpeed[option]}
       </option>
     ));
 
@@ -94,7 +94,7 @@ const GameInputs: React.FC<GameInputsProps> = ({ onPauseResume, paused }) => {
       <Select
         value={speed}
         onChange={handleSpeedChange}
-        options={generateSpeedOption()}
+        options={generateSpeedOptions()}
         label="Speed"
       />
       <Select
