@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import "./index.scss";
+import DOMPurify from "dompurify";
 
 interface ExpandedRowProps {
   imageUrl: string;
@@ -21,7 +22,11 @@ const ExpandedRow: React.FC<ExpandedRowProps> = ({ imageUrl, id, body }) => (
           }}
         />
         <div className="body">
-          <p dangerouslySetInnerHTML={{ __html: truncatedBody(body) }} />
+          <p
+            dangerouslySetInnerHTML={{
+              __html: truncatedBody(DOMPurify.sanitize(body)),
+            }}
+          />
           <NavLink className="form-button" to={`/article/${id}`}>
             loe rohkem
           </NavLink>

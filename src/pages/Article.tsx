@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
+import DOMPurify from "dompurify";
 import Loader from "../components/Loader";
 import { getArticleData } from "../api";
 import Image from "../components/Image";
@@ -18,13 +19,18 @@ const Article = () => {
   return (
     <>
       <h1 aria-label={data.title}>{data.title}</h1>
-      <div className="intro" dangerouslySetInnerHTML={{ __html: data.intro }} />
+      <div
+        className="intro"
+        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data.intro) }}
+      />
       <Image
         url={data.image.large}
         alt={data.image.alt}
         title={data.image.title}
       />
-      <div dangerouslySetInnerHTML={{ __html: data.body }} />
+      <div
+        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data.body) }}
+      />
       {data.tags
         .map((tag, i) => ({ tag, key: `${tag}-${i}` }))
         .map(({ tag, key }) => (
