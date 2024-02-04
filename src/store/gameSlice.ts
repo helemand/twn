@@ -4,7 +4,7 @@ import { populateInitialGrid } from "../assets/utils";
 
 export type Gamespeed = "normal" | "slow" | "fast";
 
-const timeoutSpeed = {
+export const TimeoutSpeed = {
   normal: 60,
   slow: 200,
   fast: 30,
@@ -14,7 +14,7 @@ export interface GameState {
   grid: Grid;
   gridWidth: number;
   gridHeight: number;
-  speed: number;
+  speed: Gamespeed;
   lifeProbability: number;
   paused: boolean;
 }
@@ -23,7 +23,7 @@ const initialState: GameState = {
   grid: populateInitialGrid(30, 70, 50),
   gridWidth: 70,
   gridHeight: 30,
-  speed: timeoutSpeed.normal,
+  speed: "normal",
   lifeProbability: 50,
   paused: false,
 };
@@ -42,7 +42,7 @@ export const gameSlice = createSlice({
       state.gridHeight = action.payload;
     },
     setSpeed: (state: GameState, action: PayloadAction<Gamespeed>) => {
-      state.speed = timeoutSpeed[action.payload];
+      state.speed = action.payload;
     },
     setLifeProbability: (state: GameState, action: PayloadAction<number>) => {
       state.lifeProbability = action.payload;

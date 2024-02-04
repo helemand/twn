@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useInterval } from "usehooks-ts";
 import GameInputs from "../components/GameInputs";
 import ProgressBar from "../components/ProgressBar";
-import { setGrid, setPaused } from "../store/gameSlice";
+import { TimeoutSpeed, setGrid, setPaused } from "../store/gameSlice";
 import GameOfLife from "../components/GameOfLife";
 import generateGrid from "../components/GameOfLife/generateGrid";
 import { useAppSelector } from "../hooks/useAppSelector";
@@ -45,7 +45,7 @@ const Game = () => {
   useInterval(() => {
     if (state.paused) return;
     runSimulation();
-  }, state.speed);
+  }, TimeoutSpeed[state.speed]);
 
   const togglePause = () => {
     dispatch(setPaused(!state.paused));
