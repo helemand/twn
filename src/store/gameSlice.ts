@@ -5,8 +5,8 @@ import { populateInitialGrid } from "../assets/utils";
 export type Gamespeed = "normal" | "slow" | "fast";
 
 export const TimeoutSpeed = {
-  normal: 60,
-  slow: 200,
+  normal: 100,
+  slow: 300,
   fast: 30,
 };
 
